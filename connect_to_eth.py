@@ -45,6 +45,8 @@ def connect_with_middleware(contract_json, merkle_contract_json):
 	contract = w3.eth.contract(address=Web3.to_checksum_address(address), abi=abi)
 	merkle_contract = w3.eth.contract(address=Web3.to_checksum_address(merkle_address), abi=merkle_abi)
 
+	w3, contract, merkle_contract = connect_with_middleware("contract.json", "merkle_contract.json")
+
 	return w3, contract, merkle_contract
 
 
