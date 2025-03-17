@@ -36,8 +36,9 @@ def connect_with_middleware(contract_json):
 	# create a contract object. Read more on the docs pages at https://web3py.readthedocs.io/en/stable/middleware.html
 	# and https://web3py.readthedocs.io/en/stable/web3.contract.html
 	contract = w3.eth.contract(address=Web3.to_checksum_address(address), abi=abi)
+	merkle_contract = w3.eth.contract(address=Web3.to_checksum_address(merkle_address), abi=merkle_abi)
 
-	return w3, contract
+	return w3, contract, merkle_contract
 
 
 if __name__ == "__main__":
