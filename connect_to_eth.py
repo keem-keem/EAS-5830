@@ -17,7 +17,7 @@ def connect_to_eth():
 	return w3
 
 
-def connect_with_middleware(contract_json, merkle_contract_json):
+def connect_with_middleware(contract_json):
 	with open(contract_json, "r") as f:
 		d = json.load(f)
 		d = d['bsc']
