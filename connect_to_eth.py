@@ -24,6 +24,13 @@ def connect_with_middleware(contract_json):
 		address = d['address']
 		abi = d['abi']
 
+	# Load Merkle contract details
+	with open(merkle_contract_json, "r") as f:
+	        m = json.load(f)
+	        m = m['bsc']
+	        merkle_address = m['address']
+	        merkle_abi = m['abi']
+
 	# TODO complete this method
 	# The first section will be the same as "connect_to_eth()" but with a BNB url
 	url = "https://bsc-dataseed.bnbchain.org"
