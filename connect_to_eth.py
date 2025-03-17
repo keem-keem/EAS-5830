@@ -24,13 +24,6 @@ def connect_with_middleware(contract_json, merkle_contract_json):
 		address = d['address']
 		abi = d['abi']
 
-	# Load Merkle contract details
-	with open(merkle_contract_json, "r") as f:
-	        m = json.load(f)
-	        m = m['bsc']
-	        merkle_address = m['address']
-	        merkle_abi = m['abi']
-
 	# TODO complete this method
 	# The first section will be the same as "connect_to_eth()" but with a BNB url
 	url = "https://bsc-testnet-rpc.publicnode.com"
@@ -43,11 +36,8 @@ def connect_with_middleware(contract_json, merkle_contract_json):
 	# create a contract object. Read more on the docs pages at https://web3py.readthedocs.io/en/stable/middleware.html
 	# and https://web3py.readthedocs.io/en/stable/web3.contract.html
 	contract = w3.eth.contract(address=Web3.to_checksum_address(address), abi=abi)
-	merkle_contract = w3.eth.contract(address=Web3.to_checksum_address(merkle_address), abi=merkle_abi)
 
-	w3, contract, merkle_contract = connect_with_middleware("contract.json", "merkle_contract.json")
-
-	return w3, contract, merkle_contract
+	return w3, contract
 
 
 if __name__ == "__main__":
