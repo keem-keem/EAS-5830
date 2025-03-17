@@ -2,7 +2,6 @@ import json
 from web3 import Web3, EthereumTesterProvider, AsyncWeb3
 from web3.middleware import ExtraDataToPOAMiddleware
 from web3.providers.rpc import HTTPProvider
-from web3.middleware.poa import ExtraDataToPOAMiddleware
 
 '''
 If you use one of the suggested infrastructure providers, the url will be of the form
