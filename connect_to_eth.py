@@ -1,4 +1,4 @@
-import json
+kimport json
 from web3 import Web3, EthereumTesterProvider, AsyncWeb3
 from web3.middleware import ExtraDataToPOAMiddleware
 from web3.providers.rpc import HTTPProvider
@@ -17,7 +17,7 @@ def connect_to_eth():
 	return w3
 
 
-def connect_with_middleware(contract_json):
+def connect_with_middleware(contract_json, merkle_contract_json):
 	with open(contract_json, "r") as f:
 		d = json.load(f)
 		d = d['bsc']
