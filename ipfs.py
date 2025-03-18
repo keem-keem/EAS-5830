@@ -4,12 +4,13 @@ import json
 post_url = 'https://ipfs.infura.io:5001/api/v0/add'
 
 def pin_to_ipfs(data):
+	
 	assert isinstance(data,dict), f"Error pin_to_ipfs expects a dictionary"
 	json_data = json.dumps(data)
 	
 	# Prepare the request payload
     	files = {
-        'file': ('data.json', json_data)
+		'file': ('data.json', json_data)
     	}
     
     	# Send a request to Infura's IPFS API to add the file
