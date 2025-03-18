@@ -13,7 +13,7 @@ def pin_to_ipfs(data):
 	}
     
     	# Send a request to Infura's IPFS API to add the file
-	response = requests.post(post_url, files=files, auth=(<project_id>,<project_secret>))
+	response = requests.post(post_url, files=files)
 	print(response.text)
 	
 	# Check if the request was successful
