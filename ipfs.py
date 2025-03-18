@@ -16,10 +16,7 @@ def pin_to_ipfs(data):
 	response = requests.post(post_url, files=files)
 	print(response.text)
 	
-	# Check if the request was successful
-	if response.status_code == 200:
-		cid = response.json().get("Hash")  # Retrieve CID (Content Identifier)
-	
+	cid = response.json().get("Hash")  # Retrieve CID (Content Identifier)
 	return cid
 
 def get_from_ipfs(cid,content_type="json"):
