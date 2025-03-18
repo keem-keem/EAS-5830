@@ -15,7 +15,7 @@ def pin_to_ipfs(data):
 	}
     
     	# Send a request to Infura's IPFS API to add the file
-	response = requests.post(post_url, files=files, auth= api_key, api_key_secret)
+	response = requests.post(post_url, files=files, auth= (api_key, api_key_secret))
 	print(response.text)
 	
 	cid = response.json().get("Hash")  # Retrieve CID (Content Identifier)
