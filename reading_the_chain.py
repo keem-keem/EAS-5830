@@ -56,6 +56,7 @@ def is_ordered_block(w3, block_num):
 
 	Conveniently, most type 2 transactions set the gasPrice field to be min( tx.maxPriorityFeePerGas + block.baseFeePerGas, tx.maxFeePerGas )
 	"""
+	
 	block = w3.eth.get_block(block_num, full_transactions=True)
 
 	priority_fees = []
@@ -65,6 +66,7 @@ def is_ordered_block(w3, block_num):
 		if tx_type == '0x2':  # EIP-1559 transaction (type 2)
 			max_fee = tx['maxFeePerGas']
 			max_priority = tx['maxPriorityFeePerGas']
+			base_fee = tx['baseFeePerGas']
 			priority_fee = min(max_priority, max_fee - base_fee)
 		else:  # Legacy (type 0) or type 1 tx
 			priority_fee = tx['gasPrice'] - base_fee
