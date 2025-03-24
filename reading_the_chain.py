@@ -40,7 +40,7 @@ def connect_with_middleware(contract_json):
 	contract = w3.eth.contract(address=Web3.to_checksum_address(address), abi=abi)
 
 	return w3, contract
-
+	
 
 def is_ordered_block(w3, block_num):
 	
@@ -58,13 +58,13 @@ def is_ordered_block(w3, block_num):
 	"""
 	
 	block = w3.eth.get_block(block_num, full_transactions=True)
-	base_fee = block.get('baseFeePerGas', 0)  # baseFeePerGas may not exist in pre-EIP-1559 blocks
+	base_fee = block.get('baseFeePerGas', 0)
 	
 	priority_fees = []
 
 	for tx in block.transactions:
-		tx_type = tx.get('type', '0x0')  # Default to legacy if type not specified
-		if tx_type == '0x2':  # EIP-1559 transaction (type 2)
+		tx_type = tx.get('type', '0x0')
+		if tx_type == '0x2':
 			max_fee = tx['maxFeePerGas']
 			max_priority_fee = tx['maxPriorityFeePerGas']
 			priority_fee = min(max_priority_fee, max_fee - base_fee)
@@ -73,7 +73,6 @@ def is_ordered_block(w3, block_num):
 
 		priority_fees.append(priority_fee)
 
-	# Check if list is in non-increasing order
 	ordered = True
 	for i in range(len(priority_fees) - 1):
 		if priority_fees[i] < priority_fees[i + 1]:
