@@ -63,7 +63,6 @@ def is_ordered_block(w3, block_num):
 	priority_fees = []
 
 	for tx in block.transactions:
-		tx_type = tx.get('type', '0x0')
 		if tx_type == '0x2':
 			max_fee = tx['maxFeePerGas']
 			max_priority_fee = tx['maxPriorityFeePerGas']
