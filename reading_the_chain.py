@@ -66,15 +66,19 @@ def is_ordered_block(w3, block_num):
 		tx_type = tx.get('type', '0x0')  # Default to legacy if type not specified
 		if tx_type == '0x2':  # EIP-1559 transaction (type 2)
 			max_fee = tx['maxFeePerGas']
-			max_priority = tx['maxPriorityFeePerGas']
-			priority_fee = min(max_priority, max_fee - base_fee)
+			max_priority_fee = tx['maxPriorityFeePerGas']
+			priority_fee = min(max_priority_fee, max_fee - base_fee)
 		else:  # Legacy (type 0) or type 1 tx
 			priority_fee = tx['gasPrice'] - base_fee
 
 		priority_fees.append(priority_fee)
 
 	# Check if list is in non-increasing order
-	ordered = all(priority_fees[i] >= priority_fees[i+1] for i in range(len(priority_fees) - 1))
+	ordered = True
+	for i in range(len(priority_fees) - 1):
+		if priority_fees[i] < priority_fees[i + 1]:
+			ordered = False
+			break
 
 	return ordered
 
