@@ -29,7 +29,6 @@ def get_ape_info(ape_id):
     data = {'owner': "", 'image': "", 'eyes': ""}
 
     # YOUR CODE HERE
-    print(contract.name)
     owner = contract.functions.ownerOf(ape_id).call()
     data['owner'] = owner
 
@@ -37,6 +36,8 @@ def get_ape_info(ape_id):
     response = requests.get(metadata_url)
     metadata = response.json()
 
+    print(metadata.get('name'))
+    
     attributes = metadata.get('attributes', [])
     for trait in attributes:
         print(trait)
