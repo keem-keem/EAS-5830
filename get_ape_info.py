@@ -15,7 +15,7 @@ with open('ape_abi.json', 'r') as f:
 
 ############################
 # Connect to an Ethereum node
-api_url = ""  # YOU WILL NEED TO PROVIDE THE URL OF AN ETHEREUM NODE
+api_url = "https://mainnet.infura.io/v3/5099618b27de4148a4046b00a73e0a9e"  # YOU WILL NEED TO PROVIDE THE URL OF AN ETHEREUM NODE
 provider = HTTPProvider(api_url)
 web3 = Web3(provider)
 
@@ -28,6 +28,22 @@ def get_ape_info(ape_id):
     data = {'owner': "", 'image': "", 'eyes': ""}
 
     # YOUR CODE HERE
+    owner = contract.functions.ownerOf(ape_id).call()
+    data['owner'] = owner
+
+    metadata_url = f"https://gateway.pinata.cloud/ipfs/QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/{ape_id}"
+    response = requests.get(metadata_url)
+    # if response.status_code != 200:
+    #     raise Exception(f"Failed to retrieve metadata for ape {ape_id}")
+    metadata = response.json()
+
+    attributes = metadata.get('attributes', [])
+    for trait in attributes:
+        if trait.get('trait_type') == 'Eyes':
+            data['eyes'] = trait.get('value', '')
+            break
+
+    data['image'] = metadata.get('image', '')
 
     assert isinstance(data, dict), f'get_ape_info{ape_id} should return a dict'
     assert all([a in data.keys() for a in
