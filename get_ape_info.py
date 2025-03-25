@@ -34,12 +34,11 @@ def get_ape_info(ape_id):
 
     metadata_url = f"https://gateway.pinata.cloud/ipfs/QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/{ape_id}"
     response = requests.get(metadata_url)
-    # if response.status_code != 200:
-    #     raise Exception(f"Failed to retrieve metadata for ape {ape_id}")
     metadata = response.json()
 
     attributes = metadata.get('attributes', [])
     for trait in attributes:
+        print(trait)
         if trait.get('trait_type') == 'Eyes':
             data['eyes'] = trait.get('value', '')
             break
