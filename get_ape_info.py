@@ -29,6 +29,7 @@ def get_ape_info(ape_id):
     data = {'owner': "", 'image': "", 'eyes': ""}
 
     # YOUR CODE HERE
+    print(contract.name)
     owner = contract.functions.ownerOf(ape_id).call()
     data['owner'] = owner
 
