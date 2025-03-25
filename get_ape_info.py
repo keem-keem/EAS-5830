@@ -36,7 +36,7 @@ def get_ape_info(ape_id):
     response = requests.get(metadata_url)
     metadata = response.json()
 
-    print(metadata.get('name'))
+    print(metadata.get('name', ape_id))
     
     attributes = metadata.get('attributes', [])
     for trait in attributes:
