@@ -22,7 +22,7 @@ def sign(m):
      several upcoming assignments and the first step of funding an account is having 
      an account to send the funds too.
     """
-    print('Account created:\n'
+    print(f'Account created: {public_key}\n'
           f'private key={w3.to_hex(private_key)}\naccount={public_key}\n')
     assert isinstance(signed_message, eth_account.datastructures.SignedMessage)
     # print(f"signed message {signed_message}\nr= {signed_message.r}\ns= {signed_message.s}")
