@@ -33,9 +33,9 @@ def verify(m, public_key, signed_message):
     w3 = Web3()
 
     # TODO verify the 'signed_message' is valid given the original message 'm' and the signers 'public_key'
-    message = m  # Encode the message
-    signer = 0  # Verify the message
-    valid_signature = 0  # True if message verifies, False if message does not verify
+    message = encode_defunct(text=m)  # Encode the message
+    signer =  Account.recover_message(message, signature=signed_message.signature) # Verify the message
+    valid_signature = (signer == public_key)  # True if message verifies, False if message does not verify
 
     assert isinstance(valid_signature, bool), "verify should return a boolean value"
     return valid_signature
