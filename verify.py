@@ -10,7 +10,7 @@ w3 = Web3(Web3.HTTPProvider("https://api.avax-test.network/ext/bc/C/rpc"))
 w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
 
 # Load the ABI (paste the full ABI in a JSON file)
-with open("nft_abi.json", "r") as f:
+with open("NFT.abi", "r") as f:
     abi = json.load(f)
 
 # Contract setup
