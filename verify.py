@@ -3,10 +3,11 @@ from eth_account.messages import encode_defunct
 import random
 import os
 import json
+from web3.middleware import ExtraDataToPOAMiddleware
 
 # Connect to Avalanche Fuji
 w3 = Web3(Web3.HTTPProvider("https://api.avax-test.network/ext/bc/C/rpc"))
-w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
 
 # Load the ABI (paste the full ABI in a JSON file)
 with open("nft_abi.json", "r") as f:
