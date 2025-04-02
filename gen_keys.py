@@ -14,9 +14,10 @@ def sign_message(challenge, filename="secret_key.txt"):
     # This code will read your "sk.txt" file
     # If the file is empty, it will raise an exception
     with open(filename, "r") as f:
-        key = f.readlines().strip()
+        key = f.readlines()
     assert(len(key) > 0), "Your account secret_key.txt is empty"
-    assert len(key) == 64, "The private key should be 64 characters long (without 0x prefix)"
+    
+    key = key[0].strip()
     
     w3 = Web3()
     message = encode_defunct(challenge)
