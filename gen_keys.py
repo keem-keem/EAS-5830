@@ -32,7 +32,7 @@ def sign_message(challenge, filename="secret_key.txt"):
     private_key = account.key
 
     # From signatures.py: sign the given message
-    signed_message = account.sign_message(challenge, key)  # Sign the message
+    signed_message = account.sign_message(challenge)  # Sign the message
     assert account.Account.recover_message(message,signature=signed_message.signature.hex()) == eth_addr, f"Failed to sign message properly"
 
     #return signed_message, account associated with the private key
