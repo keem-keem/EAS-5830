@@ -19,6 +19,9 @@ def sign_message(challenge, filename="secret_key.txt"):
     
     key = key[0].strip()
     
+    print(key)
+    print(challenge)
+    
     w3 = Web3()
     message = encode_defunct(text = challenge)  # Encode the message
     
