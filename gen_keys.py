@@ -21,9 +21,16 @@ def sign_message(challenge, filename="secret_key.txt"):
 
     # TODO recover your account information for your private key and sign the given challenge
     # Use the code from the signatures assignment to sign the given challenge
-    
 
 
+    # Create an account for signing the message
+    account_object = Account.create()  # Create an Eth account
+    public_key = account_object.address  # Eth account public key
+    private_key = account_object.key  # Eth account private key
+
+    # Sign the given message "m"
+    message = encode_defunct(text=m)  # Encode the message
+    signed_message = Account.sign_message(message, private_key=private_key)  # Sign the message
 
 
 
