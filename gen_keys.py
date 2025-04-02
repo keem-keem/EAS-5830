@@ -23,7 +23,6 @@ def sign_message(challenge, filename="secret_key.txt"):
     print(challenge)
     
     w3 = Web3()
-    message = encode_defunct(text = challenge)  # Encode the message
     
     # TODO recover your account information for your private key and sign the given challenge
     # Use the code from the signatures assignment to sign the given challenge
@@ -32,12 +31,9 @@ def sign_message(challenge, filename="secret_key.txt"):
     eth_addr = account.address
     private_key = account.key  # Eth account private key
 
-    # TODO sign the given message "m"
-    message = encode_defunct(text=m)  # Encode the message
-    signed_message = Account.sign_message(message, private_key=private_key)  # Sign the message
-
     # From signatures.py: sign the given message
-    signed_message = account.sign_message(message)  # Sign the message
+    message = encode_defunct(text=challenge)  # Encode the message
+    signed_message = Account.sign_message(message, private_key=key)  # Sign the message
     assert eth_account.Account.recover_message(message,signature=signed_message.signature.hex()) == eth_addr, f"Failed to sign message properly"
 
     #return signed_message, account associated with the private key
