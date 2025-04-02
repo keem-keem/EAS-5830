@@ -16,6 +16,7 @@ def sign_message(challenge, filename="secret_key.txt"):
     with open(filename, "r") as f:
         key = f.readlines().strip()
     assert(len(key) > 0), "Your account secret_key.txt is empty"
+    assert len(key) == 64, "The private key should be 64 characters long (without 0x prefix)"
     
     w3 = Web3()
     message = encode_defunct(challenge)
