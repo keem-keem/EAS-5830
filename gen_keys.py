@@ -23,11 +23,12 @@ def sign_message(challenge, filename="secret_key.txt"):
     # TODO recover your account information for your private key and sign the given challenge
     # Use the code from the signatures assignment to sign the given challenge
 
-    account_object = Account.create()  # Create an Eth account
+    account_object = Account.privateKeyToAccount(key)
+    eth_addr = account.address
 
     # SIGNATURES: Sign the given message "m"
     message = encode_defunct(text = challenge)  # Encode the message
-    signed_message = Account.sign_message(message, private_key=key)  # Sign the message
+    signed_message = Account.sign_message(message)  # Sign the message
 
     assert eth_account.Account.recover_message(message,signature=signed_message.signature.hex()) == eth_addr, f"Failed to sign message properly"
 
