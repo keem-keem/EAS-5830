@@ -30,7 +30,7 @@ def sign_message(challenge, filename="secret_key.txt"):
 
     # SIGNATURES: Sign the given message "m"
     message = encode_defunct(text = challenge)  # Encode the message
-    signed_message = Account.sign_message(message)  # Sign the message
+    signed_message = account.sign_message(message)  # Sign the message
 
     assert eth_account.Account.recover_message(message,signature=signed_message.signature.hex()) == eth_addr, f"Failed to sign message properly"
 
