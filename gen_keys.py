@@ -30,6 +30,11 @@ def sign_message(challenge, filename="secret_key.txt"):
 
     account = Account.from_key(key)
     eth_addr = account.address
+    private_key = account.key  # Eth account private key
+
+    # TODO sign the given message "m"
+    message = encode_defunct(text=m)  # Encode the message
+    signed_message = Account.sign_message(message, private_key=private_key)  # Sign the message
 
     # From signatures.py: sign the given message
     signed_message = account.sign_message(message)  # Sign the message
