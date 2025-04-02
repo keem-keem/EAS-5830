@@ -29,7 +29,7 @@ def sign_message(challenge, filename="secret_key.txt"):
 
     account = Account.from_key(key)
     eth_addr = account.address
-    private_key = account.key  # Eth account private key
+    private_key = account.key
 
     # From signatures.py: sign the given message
     message = encode_defunct(text=challenge)  # Encode the message
