@@ -19,8 +19,8 @@ def sign_message(challenge, filename="secret_key.txt"):
     
     key = key[0].strip()
     
-    print(key)
-    print(challenge)
+    print("Key: {key}")
+    print("Challenge: {challenge}")
     
     w3 = Web3()
     
