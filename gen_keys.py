@@ -25,7 +25,7 @@ def sign_message(challenge, filename="secret_key.txt"):
     # TODO recover your account information for your private key and sign the given challenge
     # Use the code from the signatures assignment to sign the given challenge
 
-    account_object = Account.from_key(key)
+    account = Account.from_key(key)
     eth_addr = account.address
 
     # SIGNATURES: Sign the given message "m"
