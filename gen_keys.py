@@ -1,4 +1,4 @@
-from web3 import Web3
+efrom web3 import Web3
 from eth_account.messages import encode_defunct
 import eth_account
 import os
@@ -34,7 +34,7 @@ def sign_message(challenge, filename="secret_key.txt"):
     # From signatures.py: sign the given message
     message = encode_defunct(primitive = challenge)
     signed_message = Account.sign_message(message, private_key = key)  # Sign the message
-    assert account.Account.recover_message(message,signature=signed_message.signature.hex()) == eth_addr, f"Failed to sign message properly"
+    assert eth_account.Account.recover_message(message,signature=signed_message.signature.hex()) == eth_addr, f"Failed to sign message properly"
 
     #return signed_message, account associated with the private key
     return signed_message, eth_addr
