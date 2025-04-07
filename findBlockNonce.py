@@ -5,58 +5,29 @@ import random
 
 
 def mine_block(k, prev_hash, transactions):
-    """
-        k - Number of trailing zeros in the binary representation (integer)
-        prev_hash - the hash of the previous block (bytes)
-        rand_lines - a set of "transactions," i.e., data to be included in this block (list of strings)
 
-        Complete this function to find a nonce such that 
-        sha256( prev_hash + rand_lines + nonce )
-        has k trailing zeros in its *binary* representation
-    """
     if not isinstance(k, int) or k < 0:
         print("mine_block expects positive integer")
         return b'\x00'
 
     # TODO your code to find a nonce here
-    word="Bitcoin"
-    hashlib.sha256(word.encode('utf-8')).hexdigest()
+    hashlib.sha256(prev_hash.encode('utf-8')).hexdigest()
+    
     m = hashlib.sha256()
-    for c in str:
+    for c in prev_hash:
       m.update(c.encode('utf-8'))
     m.hexdigest()
-
-    def mine_block(k, prev_hash, rand_lines):
-      """
-          k - Number of trailing zeros in the binary representation (integer)
-          prev_hash - the hash of the previous block (bytes)
-          rand_lines - a set of "transactions," i.e., data to be included in this block (list of strings)
-  
-          This function finds a nonce such that 
-          sha256( prev_hash + rand_lines + nonce )
-          has k trailing zeros in its *binary* representation
-      """
-      if not isinstance(k, int) or k < 0:
-          print("mine_block expects positive integer")
-          return b'\x00'
-  
-      # Prepare the base data: prev_hash + joined transaction strings
-      base_data = prev_hash + ''.join(rand_lines).encode()
-  
-      nonce_int = 0
-      while True:
-          nonce = nonce_int.to_bytes((nonce_int.bit_length() + 7) // 8 or 1, 'big')
-          hash_result = hashlib.sha256(base_data + nonce).digest()
-          hash_bin = bin(int.from_bytes(hash_result, 'big'))  # Convert to binary string
-          if hash_bin.endswith('0' * k):
-              break
-          nonce_int += 1
-  
-      assert isinstance(nonce, bytes), 'nonce should be of type bytes'
-      return nonce
-  
     
-  
+    nonce_int = 0
+    
+    while True:
+        nonce = nonce_int.to_bytes((nonce_int.bit_length() + 7) // 8 or 1, 'big')
+        hash_result = hashlib.sha256(base_data + nonce).digest()
+        hash_bin = bin(int.from_bytes(hash_result, 'big'))  # Convert to binary string
+        if hash_bin.endswith('0' * k):
+            break
+        nonce_int += 1
+    
       assert isinstance(nonce, bytes), 'nonce should be of type bytes'
       return nonce
 
