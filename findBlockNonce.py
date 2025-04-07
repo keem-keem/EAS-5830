@@ -25,7 +25,7 @@ def mine_block(k, prev_hash, rand_lines):
 
     nonce_int = 0
     while True:
-        nonce = nonce_int.to_bytes((nonce_int.bit_length(), 'big')
+        nonce = nonce_int.to_bytes((nonce_int.bit_length()), 'big')
         
         hash_result = hashlib.sha256(base_data + nonce).digest()
         hash_bin = bin(int.from_bytes(hash_result, 'big'))
