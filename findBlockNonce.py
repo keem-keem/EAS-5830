@@ -20,7 +20,7 @@ def mine_block(k, prev_hash, rand_lines):
     return b'\x00'
 
     # TODO your code to find a nonce here 
-    hashlib.sha256(rand_lines.encode('utf-8').hexdigest()
+    hashlib.sha256(rand_lines.encode('utf-8')).hexdigest()
     base_data = prev_hash + transactions_data
         
     nonce_int = 0
