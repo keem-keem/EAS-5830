@@ -5,10 +5,9 @@ import random
 
 
 def mine_block(k, prev_hash, transactions):
-
     if not isinstance(k, int) or k < 0:
         print("mine_block expects positive integer")
-        return b'\x00'
+    return b'\x00'
 
     # TODO your code to find a nonce here
     hashlib.sha256(prev_hash.encode('utf-8')).hexdigest()
@@ -28,8 +27,8 @@ def mine_block(k, prev_hash, transactions):
             break
         nonce_int += 1
     
-      assert isinstance(nonce, bytes), 'nonce should be of type bytes'
-      return nonce
+    assert isinstance(nonce, bytes), 'nonce should be of type bytes'
+    return nonce
 
 
 def get_random_lines(filename, quantity):
