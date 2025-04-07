@@ -1,4 +1,4 @@
-#!/bin/python
+x#!/bin/python
 import hashlib
 import os
 import random
@@ -27,7 +27,7 @@ def mine_block(k, prev_hash, rand_lines):
     
     while True:
         nonce = nonce_int.to_bytes((nonce_int.bit_length() + 7) // 8 or 1, 'big')
-        hash_result = hashlib.sha256(base_data + nonce).digest()
+        hash_result = hashlib.sha256(base_data + nonce).hexdigest()
         hash_bin = bin(int.from_bytes(hash_result, 'big'))  # Convert to binary string
         if hash_bin.endswith('0' * k):
             break
