@@ -4,13 +4,27 @@ import os
 import random
 
 
-def mine_block(k, prev_hash, transactions):
+def mine_block(k, prev_hash, rand_lines):
+    """
+        k - Number of trailing zeros in the binary representation (integer)
+        prev_hash - the hash of the previous block (bytes)
+        rand_lines - a set of "transactions," i.e., data to be included in this block (list of strings)
+
+        Complete this function to find a nonce such that 
+        sha256( prev_hash + rand_lines + nonce )
+        has k trailing zeros in its *binary* representation
+    """
+    
     if not isinstance(k, int) or k < 0:
         print("mine_block expects positive integer")
     return b'\x00'
 
     # TODO your code to find a nonce here
+    
     hashlib.sha256(prev_hash.encode('utf-8')).hexdigest()
+    
+    transactions_data = ''.join(rand_lines).encode()
+    base_data = prev_hash + transactions_data
     
     m = hashlib.sha256()
     for c in prev_hash:
