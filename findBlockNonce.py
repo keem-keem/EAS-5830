@@ -21,7 +21,7 @@ def mine_block(k, prev_hash, rand_lines):
 
     # TODO your code to find a nonce here 
     rand_lines.encode('utf-8')
-    base_data = prev_hash + transactions_data
+    base_data = prev_hash + rand_lines
         
     nonce_int = 0
     
