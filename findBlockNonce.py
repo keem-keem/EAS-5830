@@ -19,18 +19,10 @@ def mine_block(k, prev_hash, rand_lines):
         print("mine_block expects positive integer")
     return b'\x00'
 
-    # TODO your code to find a nonce here
-    
-    hashlib.sha256(prev_hash.encode('utf-8')).hexdigest()
-    
+    # TODO your code to find a nonce here 
     transactions_data = ''.join(rand_lines).encode()
     base_data = prev_hash + transactions_data
-    
-    m = hashlib.sha256()
-    for c in prev_hash:
-      m.update(c.encode('utf-8'))
-    m.hexdigest()
-    
+        
     nonce_int = 0
     
     while True:
