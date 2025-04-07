@@ -1,4 +1,4 @@
-x#!/bin/python
+#!/bin/python
 import hashlib
 import os
 import random
