@@ -48,9 +48,15 @@ def generate_primes(num_primes):
     primes_list = []
 
     #TODO YOUR CODE HERE
-
+    candidate = 2
+    while len(primes_list) < num_primes:
+        for p in primes_list:
+            if candidate % p == 0:
+                break
+        else:
+            primes_list.append(candidate)
+        candidate += 1
     return primes_list
-
 
 def convert_leaves(primes_list):
     """
@@ -59,8 +65,10 @@ def convert_leaves(primes_list):
     """
 
     # TODO YOUR CODE HERE
-
-    return []
+    leaves = []
+    for p in primes_list:
+        leaves.append(Web3.to_bytes(p).rjust(32, b'\x00'))
+    return leaves
 
 
 def build_merkle(leaves):
@@ -72,8 +80,16 @@ def build_merkle(leaves):
     """
 
     #TODO YOUR CODE HERE
-    tree = []
-
+    tree = [leaves]
+    level = leaves
+    while len(level) > 1:
+        next_level = []
+        for i in range(0, len(level), 2):
+            a = level[i]
+            b = level[i+1] if i + 1 < len(level) else level[i]
+            next_level.append(hash_pair(a, b))
+        tree.append(next_level)
+        level = next_level
     return tree
 
 
@@ -86,6 +102,13 @@ def prove_merkle(merkle_tree, random_indx):
     """
     merkle_proof = []
     # TODO YOUR CODE HERE
+    
+    index = random_indx
+    for level in merkle_tree[:-1]:  # skip the root level
+        sibling_index = index ^ 1  # flip last bit
+        if sibling_index < len(level):
+            merkle_proof.append(level[sibling_index])
+        index = index // 2
 
     return merkle_proof
 
@@ -105,6 +128,9 @@ def sign_challenge(challenge):
 
     # TODO YOUR CODE HERE
     eth_sig_obj = 'placeholder'
+
+    eth_encoded_msg = eth_account.messages.encode_defunct(text=challenge)
+    eth_sig_obj = eth_account.Account.sign_message(eth_encoded_msg, eth_sk)
 
     return addr, eth_sig_obj.signature.hex()
 
