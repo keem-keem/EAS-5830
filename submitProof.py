@@ -26,7 +26,8 @@ def merkle_assignment():
 
     # Select a random leaf and create a proof for that leaf
     random_leaf_index = 0 #TODO generate a random index from primes to claim (0 is already claimed)
-    random_leaf_index = random.randint(1, len(primes) - 1)  # Avoid 0 since it's likely claimed
+    
+    random_leaf_index = random.randint(1, len(primes) - 1)
     proof = prove_merkle(tree, random_leaf_index)
 
     # This is the same way the grader generates a challenge for sign_challenge()
@@ -36,10 +37,10 @@ def merkle_assignment():
 
     if sign_challenge_verify(challenge, addr, sig):
         tx_hash = '0x'
-        # TODO, when you are ready to attempt to claim a prime (and pay gas fees),
-        #  complete this method and run your code with the following line un-commented
-        # tx_hash = send_signed_msg(proof, leaves[random_leaf_index])
 
+        # TODO, when you are ready to attempt to claim a prime (and pay gas fees),
+        #  complete this method and run your code with the following line un-commented    
+    tx_hash = send_signed_msg(proof, leaves[random_leaf_index])
 
 def generate_primes(num_primes):
     """
