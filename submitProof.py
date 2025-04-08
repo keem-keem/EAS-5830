@@ -106,8 +106,8 @@ def prove_merkle(merkle_tree, random_indx):
     # TODO YOUR CODE HERE
     
     index = random_indx
-    for level in merkle_tree[:-1]:  # skip the root level
-        sibling_index = index ^ 1  # flip last bit
+    for level in merkle_tree[:-1]:
+        sibling_index = index ^ 1
         if sibling_index < len(level):
             merkle_proof.append(level[sibling_index])
         index = index // 2
