@@ -24,10 +24,10 @@ contract Destination is AccessControl {
 
 	function wrap(address _underlying_token, address _recipient, uint256 _amount ) public onlyRole(WARDEN_ROLE) {
 		//YOUR CODE HERE
-		address wrapped = wrapped_tokens[_underlying_token];
-		require(wrapped != address(0), "Underlying token not registered");
 		
-		// Mint BridgeToken to recipient
+		address wrapped = wrapped_tokens[_underlying_token];
+		// require(wrapped != address(0), "Underlying token not registered");
+	
 		BridgeToken token = BridgeToken(wrapped);
 		token.mint(_recipient, _amount);
 
@@ -37,7 +37,7 @@ contract Destination is AccessControl {
 	function unwrap(address _wrapped_token, address _recipient, uint256 _amount ) public {
 		//YOUR CODE HERE
 		address underlying = underlying_tokens[_wrapped_token];
-    		require(underlying != address(0), "Unknown wrapped token");
+    		// require(underlying != address(0), "Unknown wrapped token");
 
     		BridgeToken token = BridgeToken(_wrapped_token);
     		token.burnFrom(msg.sender, _amount);
@@ -49,10 +49,8 @@ contract Destination is AccessControl {
 		//YOUR CODE HERE
 		require(wrapped_tokens[_underlying_token] == address(0), "Token already registered");
 
-		// Deploy the BridgeToken with msg.sender as admin
 		BridgeToken newToken = new BridgeToken(_underlying_token, name, symbol, address(this));
 		
-		// Save token mappings
 		wrapped_tokens[_underlying_token] = address(newToken);
 		underlying_tokens[address(newToken)] = _underlying_token;
 		tokens.push(address(newToken));
