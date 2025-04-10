@@ -32,6 +32,16 @@ contract Destination is AccessControl {
 
 	function createToken(address _underlying_token, string memory name, string memory symbol ) public onlyRole(CREATOR_ROLE) returns(address) {
 		//YOUR CODE HERE
+		// Deploy a new BridgeToken
+	    	BridgeToken newToken = new BridgeToken(name, symbol);
+	
+	    	// Store mappings
+		wrapped_tokens[_underlying_token] = address(newToken);
+		underlying_tokens[address(newToken)] = _underlying_token;
+		tokens.push(address(newToken));
+		
+		emit Creation(_underlying_token, address(newToken));
+		return address(newToken);
 	}
 
 }
