@@ -34,6 +34,14 @@ contract Destination is AccessControl {
 
 	function unwrap(address _wrapped_token, address _recipient, uint256 _amount ) public {
 		//YOUR CODE HERE
+		BridgeToken token = BridgeToken(_wrapped_token);
+    		require(underlying_tokens[_wrapped_token] != address(0), "Wrapped token not recognized");
+
+    		// Burn only if the sender has enough
+    		token.burnFrom(msg.sender, _amount);
+
+    		address underlying = underlying_tokens[_wrapped_token];
+    		emit Unwrap(underlying, _wrapped_token, msg.sender, _recipient, _amount);
 	}
 
 	function createToken(address _underlying_token, string memory name, string memory symbol ) public onlyRole(CREATOR_ROLE) returns(address) {
