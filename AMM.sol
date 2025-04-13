@@ -1,6 +1,5 @@
-
-pragma solidity ^0.8.17;
 // SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/access/AccessControl.sol"; //This allows role-based access control through _grantRole() and the modifier onlyRole
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol"; //This contract needs to interact with ERC20 tokens
