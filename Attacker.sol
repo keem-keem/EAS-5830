@@ -72,7 +72,7 @@ contract Attacker is AccessControl, IERC777Recipient {
 		if (depth < max_depth) {
 			depth++;
 			bank.withdraw(amount); // Recursive call to reenter the Bank's withdraw
-}
+		}
 
 	}
 
