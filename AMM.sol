@@ -119,10 +119,11 @@ contract AMM is AccessControl{
 		require( amtA > 0 || amtB > 0, 'Cannot withdraw 0' );
 		require( recipient != address(0), 'Cannot withdraw to 0 address' );
 		if( amtA > 0 ) {
-			IERC20(tokenA).safeTransferFrom(recipient,amtA);
+			IERC20(tokenA).safeTransfer(recipient, amtA);
+
 		}
 		if( amtB > 0 ) {
-			IERC20(tokenB).safeTransferFrom(recipient,amtB);
+			IERC20(tokenB).safeTransfer(recipient, amtB);
 		}
 		invariant = IERC20(tokenA).balanceOf(address(this))*IERC20(tokenB).balanceOf(address(this));
 		emit Withdrawal( msg.sender, recipient, amtA, amtB );
