@@ -53,6 +53,8 @@ contract AMM is AccessControl{
 		require( sellToken == tokenA || sellToken == tokenB, 'Invalid token' );
 		require( sellAmount > 0, 'Cannot trade 0' );
 		require( invariant > 0, 'No liquidity' );
+		require(IERC20(sellToken).transferFrom(msg.sender, address(this), sellAmount), "Token transfer failed");
+
 		uint256 qtyA;
 		uint256 qtyB;
 		uint256 swapAmt;
