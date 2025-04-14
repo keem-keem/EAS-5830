@@ -106,7 +106,7 @@ contract AMM is AccessControl{
     		IERC20(tokenA).safeTransferFrom(msg.sender, address(this), amtA);
     		IERC20(tokenB).safeTransferFrom(msg.sender, address(this), amtB);
 
-    		invariant = IERC20(tokenA).balanceOf(address(this)) * IERC20(tokenB).balanceOf(address(this));
+    		invariant = amtA * amtB;
 
 		emit LiquidityProvision( msg.sender, amtA, amtB );
 	}
