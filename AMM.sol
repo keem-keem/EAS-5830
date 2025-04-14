@@ -63,13 +63,13 @@ contract AMM is AccessControl{
 
 		address buyToken = sellToken == tokenA ? tokenB : tokenA;
 
-		uint256 balanceSellBefore = ERC20(sellToken).balanceOf(address(this));
-		uint256 balanceBuy = ERC20(buyToken).balanceOf(address(this));
+		uint256 balanceSellBefore = IERC20(sellToken).balanceOf(address(this));
+		uint256 balanceBuy = IERC20(buyToken).balanceOf(address(this));
 
 		// Pull in the sold tokens (user must approve first)
-		ERC20(sellToken).transferFrom(msg.sender, address(this), sellAmount);
+		IERC20(sellToken).transferFrom(msg.sender, address(this), sellAmount);
 
-		uint256 balanceSellAfter = ERC20(sellToken).balanceOf(address(this));
+		uint256 balanceSellAfter = IERC20(sellToken).balanceOf(address(this));
 		uint256 actualIn = balanceSellAfter - balanceSellBefore;
 
 		// Apply fee
@@ -82,12 +82,12 @@ contract AMM is AccessControl{
 
 		require(amountOut > 0, "Output too low");
 
-		ERC20(buyToken).transfer(msg.sender, amountOut);
+		IERC20(buyToken).transfer(msg.sender, amountOut);
 
 		emit Swap(sellToken, buyToken, actualIn, amountOut);
 
 
-		uint256 new_invariant = ERC20(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
+		uint256 new_invariant = IERC20(tokenA).balanceOf(address(this))*IERC20(tokenB).balanceOf(address(this));
 		require( new_invariant >= invariant, 'Bad trade' );
 		invariant = new_invariant;
 	}
@@ -117,12 +117,12 @@ contract AMM is AccessControl{
 		require( amtA > 0 || amtB > 0, 'Cannot withdraw 0' );
 		require( recipient != address(0), 'Cannot withdraw to 0 address' );
 		if( amtA > 0 ) {
-			ERC20(tokenA).transfer(recipient,amtA);
+			IERC20(tokenA).transfer(recipient,amtA);
 		}
 		if( amtB > 0 ) {
-			ERC20(tokenB).transfer(recipient,amtB);
+			IERC20(tokenB).transfer(recipient,amtB);
 		}
-		invariant = ERC20(tokenA).balanceOf(address(this))*ERC20(tokenB).balanceOf(address(this));
+		invariant = IERC20(tokenA).balanceOf(address(this))*IERC20(tokenB).balanceOf(address(this));
 		emit Withdrawal( msg.sender, recipient, amtA, amtB );
 	}
 
