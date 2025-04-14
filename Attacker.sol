@@ -26,8 +26,8 @@ contract Attacker is AccessControl, IERC777Recipient {
 
 	function setTarget(address bank_address) external onlyRole(ATTACKER_ROLE) {
 		bank = Bank(bank_address);
-        _grantRole(ATTACKER_ROLE, address(this));
-        _grantRole(ATTACKER_ROLE, bank.token.address );
+        	_grantRole(ATTACKER_ROLE, address(this));
+        	_grantRole(ATTACKER_ROLE, bank.token.address );
 	}
 
 	/*
@@ -35,7 +35,7 @@ contract Attacker is AccessControl, IERC777Recipient {
 	   amt is the amt of ETH the attacker will deposit initially to start the attack
 	*/
 	function attack(uint256 amt) payable public {
-      require( address(bank) != address(0), "Target bank not set" );
+      		require( address(bank) != address(0), "Target bank not set" );
 		//YOUR CODE TO START ATTACK GOES HERE
 	}
 
