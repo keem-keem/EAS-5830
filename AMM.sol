@@ -4,6 +4,8 @@ pragma solidity ^0.8.17;
 import "@openzeppelin/contracts/access/AccessControl.sol"; //This allows role-based access control through _grantRole() and the modifier onlyRole
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol"; //This contract needs to interact with ERC20 tokens
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+using SafeERC20 for IERC20;
 
 contract AMM is AccessControl{
     bytes32 public constant LP_ROLE = keccak256("LP_ROLE");
@@ -101,8 +103,8 @@ contract AMM is AccessControl{
 
 		require(amtA > 0 || amtB > 0, 'Cannot provide 0 liquidity');
 
-    		require(IERC20(tokenA).transferFrom(msg.sender, address(this), amtA), "Token A transfer failed");
-    		require(IERC20(tokenB).transferFrom(msg.sender, address(this), amtB), "Token B transfer failed");
+    		require(IERC20(tokenA).safeTransferFrom(msg.sender, address(this), amtA), "Token A transfer failed");
+    		require(IERC20(tokenB).safeTransferFrom(msg.sender, address(this), amtB), "Token B transfer failed");
 
     		invariant = IERC20(tokenA).balanceOf(address(this)) * IERC20(tokenB).balanceOf(address(this));
 
@@ -117,10 +119,10 @@ contract AMM is AccessControl{
 		require( amtA > 0 || amtB > 0, 'Cannot withdraw 0' );
 		require( recipient != address(0), 'Cannot withdraw to 0 address' );
 		if( amtA > 0 ) {
-			IERC20(tokenA).transfer(recipient,amtA);
+			IERC20(tokenA).safeTransferFrom(recipient,amtA);
 		}
 		if( amtB > 0 ) {
-			IERC20(tokenB).transfer(recipient,amtB);
+			IERC20(tokenB).safeTransferFrom(recipient,amtB);
 		}
 		invariant = IERC20(tokenA).balanceOf(address(this))*IERC20(tokenB).balanceOf(address(this));
 		emit Withdrawal( msg.sender, recipient, amtA, amtB );
