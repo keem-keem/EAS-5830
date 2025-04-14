@@ -64,7 +64,7 @@ contract Attacker is AccessControl, IERC777Recipient {
 		uint256 amount,
 		bytes calldata userData,
 		bytes calldata operatorData
-	) external {
+	) external override {
 		//YOUR CODE TO RECURSE GOES HERE
 
 		emit Recurse(depth);
