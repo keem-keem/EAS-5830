@@ -38,10 +38,6 @@ contract Attacker is AccessControl, IERC777Recipient {
       		require( address(bank) != address(0), "Target bank not set" );
 		//YOUR CODE TO START ATTACK GOES HERE
 		require(amt > 0, "Must send ETH to attack");
-
-		bank.deposit{value: amt}();
-		emit Deposit(amt);
-		bank.withdraw(amt);
 	}
 
 	/*
