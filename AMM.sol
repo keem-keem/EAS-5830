@@ -3,6 +3,7 @@ pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/access/AccessControl.sol"; //This allows role-based access control through _grantRole() and the modifier onlyRole
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol"; //This contract needs to interact with ERC20 tokens
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract AMM is AccessControl{
     bytes32 public constant LP_ROLE = keccak256("LP_ROLE");
@@ -96,9 +97,12 @@ contract AMM is AccessControl{
 		require( amtA > 0 || amtB > 0, 'Cannot provide 0 liquidity' );
 		//YOUR CODE HERE
 
-		ERC20(tokenA).transferFrom(msg.sender, address(this), amtA);
-		ERC20(tokenB).transferFrom(msg.sender, address(this), amtB);
-		invariant = ERC20(tokenA).balanceOf(address(this)) * ERC20(tokenB).balanceOf(address(this));
+		require(amtA > 0 || amtB > 0, 'Cannot provide 0 liquidity');
+
+    		require(IERC20(tokenA).transferFrom(msg.sender, address(this), amtA), "Token A transfer failed");
+    		require(IERC20(tokenB).transferFrom(msg.sender, address(this), amtB), "Token B transfer failed");
+
+    		invariant = IERC20(tokenA).balanceOf(address(this)) * IERC20(tokenB).balanceOf(address(this));
 
 		emit LiquidityProvision( msg.sender, amtA, amtB );
 	}
