@@ -23,37 +23,39 @@ contract Source is AccessControl {
 
 	function deposit(address _token, address _recipient, uint256 _amount ) public {
 		//YOUR CODE HERE
-		// ✅ Check if token is registered
+
+		// Check if token is registered
 		require(approved[_token], "Token not registered");
 	
-		// ✅ Pull tokens from sender
-		require(ERC20(_token).transferFrom(msg.sender, address(this), _amount), "Transfer failed");
+		// Pull tokens from sender
+		require(ERC20(_token).transferFrom(msg.sender, address(this), _amount), "Transfer failed"); 
 	
-		// ✅ Emit deposit event
+		// Emit deposit event
 		emit Deposit(_token, _recipient, _amount);
 		}
 
 
 	function withdraw(address _token, address _recipient, uint256 _amount ) onlyRole(WARDEN_ROLE) public {
 		//YOUR CODE HERE
-	        // ✅ Push tokens to recipient
+	        // Push tokens to recipient
 	        require(ERC20(_token).transfer(_recipient, _amount), "Transfer failed");
 	
-	        // ✅ Emit withdrawal event
+	        // Emit withdrawal event
 	        emit Withdrawal(_token, _recipient, _amount);
 
 	}
 
 	function registerToken(address _token) onlyRole(ADMIN_ROLE) public {
 		//YOUR CODE HERE
-	        // ✅ Check if already registered
+
+	        // Check if already registered
 	        require(!approved[_token], "Token already registered");
 	
-	        // ✅ Mark as approved and track
+	        // Mark as approved and track
 	        approved[_token] = true;
 	        tokens.push(_token);
 	
-	        // ✅ Emit registration event
+	        // Emit registration event
 	        emit Registration(_token);
 	}
 
