@@ -67,29 +67,28 @@ contract AMM is AccessControl{
 
 		uint256 balanceSellBefore = IERC20(sellToken).balanceOf(address(this));
 		uint256 balanceBuy = IERC20(buyToken).balanceOf(address(this));
-
+	
 		// Pull in the sold tokens (user must approve first)
 		IERC20(sellToken).safeTransferFrom(msg.sender, address(this), sellAmount);
-
+	
 		uint256 balanceSellAfter = IERC20(sellToken).balanceOf(address(this));
 		uint256 actualIn = balanceSellAfter - balanceSellBefore;
-
+	
 		// Apply fee
 		uint256 effectiveIn = (actualIn * (10000 - feebps)) / 10000;
-
-		// Calculate how many buy tokens to return (x * y = k)
-		uint256 newBalanceSell = balanceSellAfter;
+	
+		// Calculate how many buy tokens to return using AMM invariant (x * y = k)
+		uint256 newBalanceSell = balanceSellBefore + effectiveIn;
 		uint256 newBalanceBuy = invariant / newBalanceSell;
 		uint256 amountOut = balanceBuy - newBalanceBuy;
-
+	
 		require(amountOut > 0, "Output too low");
-
+	
 		IERC20(buyToken).transfer(msg.sender, amountOut);
-
+	
 		emit Swap(sellToken, buyToken, actualIn, amountOut);
-
-
-		uint256 new_invariant = IERC20(tokenA).balanceOf(address(this))*IERC20(tokenB).balanceOf(address(this));
+	
+		uint256 new_invariant = IERC20(tokenA).balanceOf(address(this)) * IERC20(tokenB).balanceOf(address(this));
 		require( new_invariant >= invariant, 'Bad trade' );
 		invariant = new_invariant;
 	}
