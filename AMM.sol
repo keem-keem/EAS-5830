@@ -68,9 +68,6 @@ contract AMM is AccessControl{
 		uint256 balanceSellBefore = IERC20(sellToken).balanceOf(address(this));
 		uint256 balanceBuy = IERC20(buyToken).balanceOf(address(this));
 	
-		// Pull in the sold tokens (user must approve first)
-		IERC20(sellToken).safeTransferFrom(msg.sender, address(this), sellAmount);
-	
 		uint256 balanceSellAfter = IERC20(sellToken).balanceOf(address(this));
 		uint256 actualIn = balanceSellAfter - balanceSellBefore;
 	
@@ -105,7 +102,7 @@ contract AMM is AccessControl{
     		IERC20(tokenA).safeTransferFrom(msg.sender, address(this), amtA);
     		IERC20(tokenB).safeTransferFrom(msg.sender, address(this), amtB);
 
-    		invariant = amtA * amtB;
+    		invariant = IERC20(tokenA).balanceOf(address(this)) * IERC20(tokenB).balanceOf(address(this));
 
 		emit LiquidityProvision( msg.sender, amtA, amtB );
 	}
