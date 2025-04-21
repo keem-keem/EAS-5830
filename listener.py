@@ -8,6 +8,7 @@ import pandas as pd
 
 
 def scan_blocks(chain, start_block, end_block, contract_address, eventfile='deposit_logs.csv'):
+	
     """
     chain - string (Either 'bsc' or 'avax')
     start_block - integer first block to scan
@@ -55,24 +56,24 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
         events = event_filter.get_all_entries()
         #print( f"Got {len(events)} entries for block {block_num}" )
         # TODO YOUR CODE HERE
-	rows = []
-        for event in events:
-            row = {
-                "chain": chain,
-                "token": event["args"]["token"],
-                "recipient": event["args"]["recipient"],
-                "amount": event["args"]["amount"],
-                "transactionHash": event["transactionHash"].hex(),
-                "address": event["address"],
-                "date": datetime.fromtimestamp(w3.eth.get_block(event["blockNumber"])["timestamp"]).strftime("%d/%m/%Y %H:%M:%S")
-            }
-            rows.append(row)
-        if rows:
-            df = pd.DataFrame(rows)
-            if not Path(eventfile).is_file():
-                df.to_csv(eventfile, index=False)
+    rows = []
+    for event in events:
+	    row = {
+		    "chain": chain,
+		    "token": event["args"]["token"],
+		    "recipient": event["args"]["recipient"],
+		    "amount": event["args"]["amount"],
+		    "transactionHash": event["transactionHash"].hex(),
+		    "address": event["address"],
+		    "date": datetime.fromtimestamp(w3.eth.get_block(event["blockNumber"])["timestamp"]).strftime("%d/%m/%Y %H:%M:%S")
+	    }
+	    rows.append(row)
+    if rows:
+	    df = pd.DataFrame(rows)
+	    if not Path(eventfile).is_file():
+		    df.to_csv(eventfile, index=False)
             else:
-                df.to_csv(eventfile, mode='a', header=False, index=False)
+		    df.to_csv(eventfile, mode='a', header=False, index=False)
 
     else:
         for block_num in range(start_block,end_block+1):
