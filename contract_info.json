@@ -1,4 +1,7 @@
 {"source": { "address": "0x2849A1F9e4700BEe779232396FD803cdcA7d0cde",
+ "warden": {
+  "address": "0x10306f360f375280ba5c5fccffe7326a191a56236ccc9a179b0d952b24e1f101"
+ },
  "abi": [
   {
     "type": "constructor",
